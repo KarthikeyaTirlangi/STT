@@ -54,8 +54,10 @@ def transcribe_audio(audio_path):
         return f"Error during transcription: {str(e)}"
 
 if __name__ == "__main__":
-    # Get audio file path from user
+    # If want to get the audio file path from the user.
     # audio_file_path = input("Please enter the path to your audio file: ")
+
+    # Or from local
     audio_file_path = r"C:\Users\karth\OneDrive\Desktop\BlueKyte Work\VTT\audios\KB.wav"
     
     # Perform transcription
