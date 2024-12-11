@@ -1,0 +1,44 @@
+Audio Transcription (convert an audio file into text using moonshine)
+
+        |
+        v
+
+Intent Recognition and Classification (classify the text transcription and extract intent, confidence score, and entities like case name)
+
+                 |
+                 v
+
+            (If the primary intent is identified as “case_research,” the function will proceed to query the case research API).
+
+        |
+        v
+
+Case Research API Call (Prepares and calls the case research API with a search query, parses the response, and retrieves case details, Returns the title of the first relevant result)
+
+        |
+        v
+
+Speech Synthesis (Using Amazon Polly we'll convert the first result title text into speech.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
