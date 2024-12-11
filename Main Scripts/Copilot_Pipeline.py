@@ -251,50 +251,6 @@ def extract_key_terms(case_name: Optional[str]) -> List[str]:
     
     return clean_terms
 
-# def invoke_copilot(query: str, user_id: str = "1877", session_id: str = "86068bd2-4311-11ee-a6b3-014c891e3538") -> Optional[str]:
-#     """
-#     Invokes the copilot API with the given query
-#     Parameters:
-#         query (str): The case name or query from user
-#         user_id (str): User ID (default: "1877")
-#         session_id (str): Session ID (default: "86068bd2-4311-11ee-a6b3-014c891e3538")
-#     Returns:
-#         Optional[str]: Response from copilot API or None if failed
-#     """
-#     try:
-#         # Format URL with required parameters
-#         url = f"{copilot_base_url}/add-message-to-session-documentqa/{user_id}/{session_id}/{query}/total"
-        
-#         # URL encode the query part to handle special characters
-#         url = requests.utils.quote(url, safe=':/?=&')
-        
-#         headers = {
-#             "Content-Type": "application/json"
-#         }
-        
-#         logger.info(f"Calling Copilot API with URL: {url}")
-        
-#         response = requests.post(url, headers=headers, timeout=60)
-        
-#         logger.info(f"Copilot API Response Status: {response.status_code}")
-        
-#         if response.status_code != 200:
-#             logger.error(f"Copilot API Error: {response.status_code} - {response.text}")
-#             return None
-            
-#         response_data = response.json()
-#         # Process response according to actual API response structure
-#         # Adjust the response data extraction based on actual API response format
-#         result = response_data.get("answer", response_data.get("response", "No answer found"))
-        
-#         # Synthesize speech for the response
-#         synthesize_speech(result)
-        
-#         return result
-        
-#     except Exception as e:
-#         logger.error(f"Error in copilot API call: {str(e)}")
-#         return None
 
 async def invoke_copilot(query: str, user_id: str = "1877", session_id: str = "86068bd2-4311-11ee-a6b3-014c891e3538") -> Optional[str]:
     """
@@ -307,10 +263,8 @@ async def invoke_copilot(query: str, user_id: str = "1877", session_id: str = "8
         Optional[str]: Response from copilot API or None if failed
     """
     try:
-        # Format URL with required parameters
         url = f"{copilot_base_url}/add-message-to-session-documentqa/{user_id}/{session_id}/{query}/total"
         
-        # URL encode the query part to handle special characters
         url = requests.utils.quote(url, safe=':/?=&')
         
         headers = {
@@ -429,36 +383,6 @@ def synthesize_speech(text: str, voice_id: str = "Raveena", output_format: str =
         logger.error(f"Error synthesizing speech: {str(e)}")
         raise
 
-# async def process_query(transcribed_text: str, 
-#                        user_id: str = "1877", 
-#                        session_id: str = "86068bd2-4311-11ee-a6b3-014c891e3538") -> Optional[str]:
-#     """
-#     Processes the query and routes to appropriate service based on intent
-#     """
-#     try:
-#         # Detect intent
-#         intent_result = detect_intent(transcribed_text)
-        
-#         logger.info(f"Detected intent: {intent_result['intent_type']} with confidence: {intent_result['confidence']}")
-        
-#         if intent_result["intent_type"] == "case_research":
-#             case_name = intent_result["entities"].get("case_name")
-#             key_terms = intent_result["entities"].get("key_terms", [])
-#             if case_name:
-#                 return invoke_case_research(case_name, key_terms)
-        
-#         elif intent_result["intent_type"] == "copilot":
-#             query = intent_result["entities"].get("query")
-#             if query:
-#                 return invoke_copilot(query, user_id, session_id)
-        
-#         logger.warning(f"No valid intent detected or missing required entities. Intent: {intent_result['intent_type']}")
-#         return None
-            
-#     except Exception as e:
-#         logger.error(f"Error in query processing: {str(e)}")
-#         return None
-
 async def process_query(transcribed_text: str, 
                        user_id: str = "1877", 
                        session_id: str = "86068bd2-4311-11ee-a6b3-014c891e3538") -> Optional[str]:
@@ -489,50 +413,6 @@ async def process_query(transcribed_text: str,
         logger.error(f"Error in query processing: {str(e)}")
         return None
 
-# async def main(audio_file_path: str,
-#                user_id: str = "1877",
-#                session_id: str = "86068bd2-4311-11ee-a6b3-014c891e3538") -> Optional[str]:
-#     """
-#     Main pipeline to process audio input and return appropriate response
-#     """
-#     try:
-#         if not os.path.exists(audio_file_path):
-#             raise FileNotFoundError(f"Audio file not found: {audio_file_path}")
-            
-#         initial_transcription = transcribe_audio(audio_file_path)
-#         logger.info(f"Initial Transcription: {initial_transcription}")
-        
-#         corrected_transcription = await query_bedrock_correction(initial_transcription)
-#         logger.info(f"Corrected Transcription: {corrected_transcription}")
-        
-#         result = await process_query(corrected_transcription, user_id, session_id)
-        
-#         if result:
-#             logger.info(f"Process result: {result}")
-#             return result
-#         else:
-#             logger.warning("No result available from processing.")
-#             return None
-            
-#     except Exception as e:
-#         logger.error(f"Error in main pipeline: {str(e)}")
-#         raise
-
-
-# if __name__ == "__main__":
-#     try:
-#         audio_file_path = r"C:\Users\karth\OneDrive\Desktop\BlueKyte Work\VTT\audios\copilot.wav"
-#         user_id = "1877"
-#         session_id = "86068bd2-4311-11ee-a6b3-014c891e3538"
-        
-#         result = asyncio.run(main(audio_file_path, user_id, session_id))
-#         if result:
-#             print(f"Process completed successfully. Result: {result}")
-#         else:
-#             print("Process completed but no results were found.")
-#     except Exception as e:
-#         logger.error(f"Application error: {str(e)}")
-#         print(f"An error occurred: {str(e)}")
 
 async def main(audio_file_path: str,
                user_id: str = "1877",
