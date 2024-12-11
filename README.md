@@ -1,5 +1,3 @@
-Here's a sample README file for your repository:
-
 ---
 
 # Project Repository for Voice Command Pipeline
