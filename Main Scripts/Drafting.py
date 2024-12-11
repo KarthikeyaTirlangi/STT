@@ -224,7 +224,7 @@ class LegalDraftSystem:
                 # Verify template exists in list
                 if selected_template in templates:
                     return selected_template
-                return templates[0]  # Default to first template if selection fails
+                return templates[0]  # Default to first template (if selection fails)
 
             except Exception as e:
                 logger.error(f"Error in template selection: {str(e)}")
@@ -321,7 +321,7 @@ async def main():
     
     try:
         # 1. Transcribe audio
-        audio_path = r"C:\Users\karth\OneDrive\Desktop\BlueKyte Work\VTT\audios\drafting.wav"  # Replace with actual audio path
+        audio_path = r"C:\Users\karth\OneDrive\Desktop\BlueKyte Work\VTT\audios\drafting.wav"  # Replace with audio path
         transcript = await system.transcribe_audio(audio_path)
         logger.info(f"Transcription result: {transcript[:200]}...")  # First 200 chars for preview
         logger.info("Transcription completed")
